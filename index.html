@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Invitation | Nikah & Walima</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --emerald: #0d4f3d;
+      --emerald-light: #0f6b52;
+      --matte-black: #1a1a1a;
+      --royal-gold: #c9a227;
+      --gold-light: #e8d48b;
+      --gold-foil: linear-gradient(135deg, #c9a227 0%, #e8d48b 40%, #c9a227 100%);
+      --ivory: #f8f6f0;
+      --ivory-warm: #f5f0e6;
+      --glass: rgba(248, 246, 240, 0.12);
+      --glass-border: rgba(201, 162, 39, 0.35);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background: var(--matte-black);
+      color: var(--ivory);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Geometric pattern overlay */
+    .pattern-bg {
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(13, 79, 61, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(201, 162, 39, 0.08) 0%, transparent 50%),
+        linear-gradient(180deg, #0f1412 0%, #1a1a1a 30%, #141a18 100%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .pattern-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23c9a227' stroke-opacity='0.06' stroke-width='0.5'/%3E%3C/svg%3E");
+      opacity: 0.6;
+    }
+
+    .pattern-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L22 18 L40 20 L22 22 L20 40 L18 22 L0 20 L18 18 Z' fill='none' stroke='%23c9a227' stroke-opacity='0.04' stroke-width='0.4'/%3E%3C/svg%3E");
+      opacity: 0.8;
+    }
+
+    .invitation-wrapper {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Main card container */
+    .invitation-card {
+      max-width: 720px;
+      width: 100%;
+      background: 
+        linear-gradient(165deg, rgba(201, 162, 39, 0.03) 0%, transparent 25%, transparent 75%, rgba(13, 79, 61, 0.04) 100%),
+        linear-gradient(165deg, rgba(26, 26, 26, 0.95) 0%, rgba(15, 20, 18, 0.98) 100%);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      box-shadow: 
+        0 0 0 1px rgba(201, 162, 39, 0.1),
+        0 25px 50px -12px rgba(0, 0, 0, 0.6),
+        0 0 80px rgba(13, 79, 61, 0.15);
+      backdrop-filter: blur(20px);
+      overflow: hidden;
+      animation: cardEntrance 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      transition: box-shadow 0.5s ease, border-color 0.5s ease;
+    }
+
+    @keyframes cardEntrance {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .invitation-card:hover {
+      border-color: rgba(201, 162, 39, 0.45);
+      box-shadow: 
+        0 0 0 1px rgba(201, 162, 39, 0.2),
+        0 25px 50px -12px rgba(0, 0, 0, 0.6),
+        0 0 100px rgba(201, 162, 39, 0.08);
+    }
+
+    /* Corner ornaments */
+    .corner-ornament {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+    .corner-ornament.top-left { top: 12px; left: 12px; }
+    .corner-ornament.top-right { top: 12px; right: 12px; transform: scaleX(-1); }
+    .corner-ornament.bot-left { bottom: 12px; left: 12px; transform: scaleY(-1); }
+    .corner-ornament.bot-right { bottom: 12px; right: 12px; transform: scale(-1); }
+
+    /* Gold top border accent */
+    .card-gold-line {
+      height: 3px;
+      background: var(--gold-foil);
+      background-size: 200% 100%;
+      animation: shimmer 4s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* Section spacing */
+    .section {
+      padding: 2rem 2.5rem;
+      position: relative;
+    }
+
+    @media (max-width: 576px) {
+      .section { padding: 1.5rem 1.25rem; }
+    }
+
+    /* Bismillah */
+    .bismillah-wrap {
+      text-align: center;
+      padding: 2.5rem 1.5rem 1.5rem;
+    }
+
+    .bismillah {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 0.08em;
+      opacity: 0;
+      animation: fadeInUp 1s 0.3s ease forwards;
+      text-shadow: 0 0 30px rgba(201, 162, 39, 0.3);
+    }
+
+    .bismillah-underline {
+      width: 120px;
+      height: 2px;
+      background: var(--gold-foil);
+      margin: 1rem auto 0;
+      opacity: 0;
+      animation: fadeIn 0.8s 0.6s ease forwards;
+    }
+
+    /* Divider with crescent */
+    .divider-gold {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.5rem 0;
+      margin: 0 2.5rem;
+    }
+
+    .divider-gold::before,
+    .divider-gold::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--royal-gold), transparent);
+      opacity: 0.5;
+    }
+
+    .crescent-icon {
+      width: 28px;
+      height: 28px;
+      opacity: 0.7;
+    }
+
+    /* Wedding title */
+    .wedding-title-wrap {
+      text-align: center;
+      padding: 1rem 0 2rem;
+    }
+
+    .wedding-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      opacity: 0.9;
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      animation: fadeInUp 0.9s 0.5s ease forwards;
+    }
+
+    .wedding-title {
+      font-family: 'Amiri', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      background: var(--gold-foil);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0;
+      animation: fadeInUp 1s 0.6s ease forwards;
+    }
+
+    .family-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      font-weight: 600;
+      color: var(--ivory);
+      margin-top: 0.75rem;
+      letter-spacing: 0.12em;
+      opacity: 0;
+      animation: fadeInUp 0.9s 0.75s ease forwards;
+    }
+
+    /* Glass panel - family intro */
+    .glass-panel {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1.75rem 2rem;
+      margin: 1rem 0;
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      animation: fadeInUp 1s 0.9s ease forwards;
+    }
+
+    .glass-panel:hover {
+      border-color: rgba(201, 162, 39, 0.5);
+      box-shadow: 0 0 30px rgba(201, 162, 39, 0.06);
+    }
+
+    .panel-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--royal-gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .panel-text {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      line-height: 1.7;
+      color: var(--ivory-warm);
+    }
+
+    /* Event blocks */
+    .event-section {
+      padding: 1.5rem 0;
+      position: relative;
+    }
+
+    .event-block {
+      background: linear-gradient(135deg, rgba(13, 79, 61, 0.2) 0%, rgba(13, 79, 61, 0.05) 100%);
+      border: 1px solid rgba(201, 162, 39, 0.25);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .event-block::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--gold-foil);
+      border-radius: 3px 0 0 3px;
+    }
+
+    .event-block:nth-child(1) { animation-delay: 1s; }
+    .event-block:nth-child(2) { animation-delay: 1.15s; }
+
+    .event-block:hover {
+      border-color: rgba(201, 162, 39, 0.45);
+      box-shadow: 0 0 25px rgba(13, 79, 61, 0.2);
+    }
+
+    .event-name {
+      font-family: 'Amiri', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 0.75rem;
+    }
+
+    .detail-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      color: var(--ivory-warm);
+    }
+
+    .detail-row:last-child { margin-bottom: 0; }
+
+    .detail-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      opacity: 0.9;
+    }
+
+    /* Shayari section */
+    .shayari-section {
+      position: relative;
+      padding: 2rem 3rem;
+    }
+
+    .shayari-block {
+      max-width: 380px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .shayari-text {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+      color: var(--gold-light);
+      line-height: 1.9;
+      margin-bottom: 0.35rem;
+    }
+
+    .shayari-eng {
+      font-size: 0.9rem;
+      color: var(--ivory-warm);
+      font-style: italic;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .shayari-eng:last-of-type { margin-bottom: 0; }
+
+    /* Event block food list */
+    .event-foods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(201, 162, 39, 0.2);
+    }
+
+    .event-foods span {
+      font-size: 0.9rem;
+      color: var(--ivory-warm);
+      padding: 0.25rem 0.6rem;
+      background: rgba(201, 162, 39, 0.1);
+      border-radius: 20px;
+      border: 1px solid rgba(201, 162, 39, 0.25);
+    }
+
+    .event-block .event-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--royal-gold);
+      padding: 0.35rem 0.75rem;
+      border-left: 2px solid var(--royal-gold);
+      border-bottom: 2px solid var(--royal-gold);
+      border-radius: 0 0 0 8px;
+      opacity: 0.9;
+    }
+
+    .event-block.event-block-nikah .event-badge { background: rgba(13, 79, 61, 0.3); }
+    .event-block.event-block-walima .event-badge { background: rgba(201, 162, 39, 0.15); }
+
+    .event-nikah-note {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--ivory-warm);
+      margin-top: 1rem;
+      opacity: 0.85;
+    }
+
+    .event-foods-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--royal-gold);
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Islamic arch decoration */
+    .arch-deco {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 200px;
+      height: 40px;
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    /* RSVP badge */
+    .rsvp-section {
+      text-align: center;
+      padding: 2rem 1.5rem;
+    }
+
+    .rsvp-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, rgba(201, 162, 39, 0.15) 0%, rgba(201, 162, 39, 0.05) 100%);
+      border: 1px solid var(--glass-border);
+      border-radius: 50px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--gold-light);
+      text-decoration: none;
+      transition: all 0.4s ease;
+      opacity: 0;
+      animation: fadeInUp 1s 1.2s ease forwards;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .rsvp-badge:hover {
+      border-color: var(--royal-gold);
+      color: var(--ivory);
+      box-shadow: 0 0 30px rgba(201, 162, 39, 0.25), 0 0 0 1px rgba(201, 162, 39, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .blessing-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      font-style: italic;
+      color: var(--gold-light);
+      margin-bottom: 1.25rem;
+      line-height: 1.7;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0.95;
+    }
+
+    .rsvp-badge.rsvp-whatsapp:hover {
+      border-color: #25D366;
+      box-shadow: 0 0 25px rgba(37, 211, 102, 0.25);
+    }
+
+    .rsvp-note {
+      font-size: 0.95rem;
+      color: var(--ivory-warm);
+      margin-top: 1.25rem;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    /* Footer dua */
+    .footer-dua {
+      text-align: center;
+      padding: 2rem 2.5rem 2.5rem;
+      border-top: 1px solid rgba(201, 162, 39, 0.2);
+    }
+
+    .dua-text {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      font-style: italic;
+      color: var(--ivory-warm);
+      line-height: 1.8;
+      opacity: 0.95;
+      opacity: 0;
+      animation: fadeIn 1s 1.35s ease forwards;
+    }
+
+    .dua-attribution {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      color: var(--royal-gold);
+      margin-top: 1rem;
+      opacity: 0.8;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Scroll-triggered animation helper */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ========== MULTI-PAGE LAYOUT ========== */
+    .pages-container {
+      position: relative;
+      z-index: 1;
+      scroll-snap-type: y mandatory;
+      overflow-y: auto;
+      height: 100vh;
+    }
+
+    .page {
+      min-height: 100vh;
+      width: 100%;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* ---------- PAGE 1: SURPRISE WELCOME ---------- */
+    .welcome-page {
+      background: 
+        radial-gradient(ellipse 100% 80% at 50% 20%, rgba(13, 79, 61, 0.5) 0%, transparent 50%),
+        radial-gradient(ellipse 80% 60% at 50% 80%, rgba(201, 162, 39, 0.12) 0%, transparent 50%),
+        linear-gradient(180deg, #0a0e0c 0%, #1a1a1a 40%, #0f1412 100%);
+      cursor: pointer;
+      transition: background 0.6s ease;
+    }
+
+    .welcome-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0 L44 36 L80 40 L44 44 L40 80 L36 44 L0 40 L36 36 Z' fill='none' stroke='%23c9a227' stroke-opacity='0.07' stroke-width='0.5'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .welcome-floating {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: rgba(201, 162, 39, 0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: float 8s ease-in-out infinite;
+    }
+    .welcome-floating:nth-child(1) { left: 15%; top: 20%; animation-delay: 0s; }
+    .welcome-floating:nth-child(2) { left: 80%; top: 30%; animation-delay: 1.5s; }
+    .welcome-floating:nth-child(3) { left: 25%; top: 70%; animation-delay: 3s; }
+    .welcome-floating:nth-child(4) { left: 75%; top: 75%; animation-delay: 2s; }
+    .welcome-floating:nth-child(5) { left: 50%; top: 15%; animation-delay: 4s; }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); opacity: 0.5; }
+      50% { transform: translate(10px, -15px); opacity: 0.9; }
+    }
+
+    .welcome-content {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      animation: welcomeFadeIn 2s ease forwards;
+    }
+
+    @keyframes welcomeFadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .welcome-crescent {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      animation: crescentGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes crescentGlow {
+      0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 20px rgba(201, 162, 39, 0.4)); }
+      50% { opacity: 1; filter: drop-shadow(0 0 35px rgba(201, 162, 39, 0.6)); }
+    }
+
+    .welcome-title {
+      font-family: 'Amiri', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 700;
+      background: var(--gold-foil);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .welcome-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      letter-spacing: 0.25em;
+      color: var(--ivory-warm);
+      margin-bottom: 2.5rem;
+    }
+
+    .open-invitation-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2.5rem;
+      background: transparent;
+      border: 2px solid rgba(201, 162, 39, 0.6);
+      border-radius: 50px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--gold-light);
+      cursor: pointer;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .open-invitation-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201, 162, 39, 0.2), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .open-invitation-btn:hover {
+      border-color: var(--royal-gold);
+      box-shadow: 0 0 30px rgba(201, 162, 39, 0.3);
+      color: var(--ivory);
+    }
+
+    .open-invitation-btn:hover::before { opacity: 1; }
+
+    .open-invitation-btn span { position: relative; z-index: 1; }
+
+    .tap-hint {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: var(--royal-gold);
+      opacity: 0.8;
+      margin-top: 1.5rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .welcome-page.revealed .welcome-content {
+      animation: welcomeOut 0.8s ease forwards;
+    }
+
+    @keyframes welcomeOut {
+      to {
+        opacity: 0;
+        transform: scale(0.9) translateY(-30px);
+      }
+    }
+
+    /* ---------- PAGE 2: BRIDE & GROOM ---------- */
+    .couple-page {
+      background: transparent;
+      padding: 3rem 1rem;
+    }
+
+    .couple-page .invitation-card {
+      max-width: 800px;
+    }
+
+    .couple-heading {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--gold-light);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .couple-sub {
+      font-size: 0.8rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--royal-gold);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .couple-photos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2.5rem;
+      margin: 2rem 0;
+      padding: 0 1rem;
+    }
+
+    .photo-card {
+      text-align: center;
+      max-width: 220px;
+    }
+
+    .photo-placeholder {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      border: 3px solid rgba(201, 162, 39, 0.5);
+      background: linear-gradient(145deg, rgba(26, 26, 26, 0.9), rgba(13, 79, 61, 0.2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(201, 162, 39, 0.2), 0 15px 40px rgba(0, 0, 0, 0.4);
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .photo-placeholder:hover {
+      border-color: var(--royal-gold);
+      box-shadow: 0 0 30px rgba(201, 162, 39, 0.2), 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .photo-placeholder {
+      position: relative;
+    }
+
+    .photo-placeholder img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .photo-placeholder .placeholder-icon {
+      width: 60px;
+      height: 60px;
+      opacity: 0.4;
+      color: var(--royal-gold);
+    }
+
+    .photo-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--ivory);
+      letter-spacing: 0.08em;
+    }
+
+    .photo-role {
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--royal-gold);
+      margin-top: 0.25rem;
+    }
+
+    .couple-divider {
+      width: 80px;
+      height: 2px;
+      background: var(--gold-foil);
+      margin: 1rem auto 0.5rem;
+    }
+
+    .and-text {
+      font-family: 'Amiri', serif;
+      font-size: 1.25rem;
+      color: var(--gold-light);
+      margin: 1.5rem 0;
+    }
+
+    .gallery-placeholders {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .gallery-item {
+      flex: 0 0 auto;
+    }
+
+    .gallery-photo {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      border: 2px dashed rgba(201, 162, 39, 0.4);
+      background: rgba(26, 26, 26, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--royal-gold);
+      opacity: 0.8;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .gallery-photo:hover {
+      border-color: var(--royal-gold);
+      background: rgba(201, 162, 39, 0.08);
+    }
+
+    /* ---------- PAGE 3: INVITATION DETAILS ---------- */
+    .details-page {
+      padding: 2rem 1rem 3rem;
+    }
+
+    /* ---------- PAGE 4: RSVP & BLESSINGS ---------- */
+    .blessings-page {
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* Page navigation dots */
+    .page-dots {
+      position: fixed;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .page-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(201, 162, 39, 0.3);
+      border: 1px solid rgba(201, 162, 39, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .page-dot:hover,
+    .page-dot.active {
+      background: var(--royal-gold);
+      box-shadow: 0 0 12px rgba(201, 162, 39, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      .page-dots { right: 0.75rem; }
+      .couple-photos { gap: 2rem; }
+      .photo-placeholder { width: 150px; height: 150px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="pattern-bg" aria-hidden="true"></div>
+  <!-- Page navigation dots -->
+  <nav class="page-dots" aria-label="Page navigation">
+    <button type="button" class="page-dot active" data-page="0" aria-label="Welcome"></button>
+    <button type="button" class="page-dot" data-page="1" aria-label="Couple"></button>
+    <button type="button" class="page-dot" data-page="2" aria-label="Invitation"></button>
+    <button type="button" class="page-dot" data-page="3" aria-label="RSVP"></button>
+  </nav>
+
+  <div class="pages-container" id="pages-container">
+    <!-- ========== PAGE 1: SURPRISE WELCOME ========== -->
+    <section class="page welcome-page" id="page-welcome" data-page="0">
+      <span class="welcome-floating" aria-hidden="true"></span>
+      <span class="welcome-floating" aria-hidden="true"></span>
+      <span class="welcome-floating" aria-hidden="true"></span>
+      <span class="welcome-floating" aria-hidden="true"></span>
+      <span class="welcome-floating" aria-hidden="true"></span>
+      <div class="welcome-content">
+        <svg class="welcome-crescent" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#c9a227"/>
+          <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="#1a1a1a"/>
+        </svg>
+        <h1 class="welcome-title">You're Invited</h1>
+        <p class="welcome-sub">To celebrate a blessed union</p>
+        <button type="button" class="open-invitation-btn" id="open-invitation-btn">
+          <span>Open Invitation</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+        </button>
+        <p class="tap-hint">Tap anywhere to open</p>
+      </div>
+    </section>
+
+    <!-- ========== PAGE 2: BRIDE & GROOM ========== -->
+    <section class="page couple-page" id="page-couple" data-page="1">
+      <div class="invitation-wrapper">
+        <article class="invitation-card">
+          <div class="card-gold-line" aria-hidden="true"></div>
+          <div class="section" style="padding-top: 2.5rem;">
+            <p class="couple-sub">The Couple</p>
+            <h2 class="couple-heading">Bride & Groom</h2>
+            <div class="couple-photos">
+              <div class="photo-card">
+                <div class="photo-placeholder">
+                  <!-- Add <img src="your-bride-photo.jpg" alt="Bride"> here to show bride photo -->
+                  <svg class="placeholder-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </div>
+                <p class="photo-name">Gulsaba</p>
+                <p class="photo-role">The Bride</p>
+              </div>
+              <p class="and-text" style="align-self: center;">&</p>
+              <div class="photo-card">
+                <div class="photo-placeholder">
+                  <!-- Add <img src="your-groom-photo.jpg" alt="Groom"> here to show groom photo -->
+                  <svg class="placeholder-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </div>
+                <p class="photo-name">Meraj</p>
+                <p class="photo-role">The Groom</p>
+              </div>
+            </div>
+            <div class="glass-panel" style="margin-top: 1rem;">
+              <div class="panel-label">A match made by the Almighty</div>
+              <p class="panel-text">With the grace of Allah, two souls unite. We invite you to witness and celebrate the Nikah of Gulsaba and Meraj, as they begin their journey together in faith and love.</p>
+            </div>
+            <p class="couple-sub" style="margin-top: 2rem; margin-bottom: 1rem;">Our Moments</p>
+            <div class="gallery-placeholders">
+              <div class="gallery-item">
+                <div class="gallery-photo"><span>Add photo</span></div>
+              </div>
+              <div class="gallery-item">
+                <div class="gallery-photo"><span>Add photo</span></div>
+              </div>
+              <div class="gallery-item">
+                <div class="gallery-photo"><span>Add photo</span></div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========== PAGE 3: INVITATION DETAILS ========== -->
+    <section class="page details-page" id="page-details" data-page="2">
+      <div class="invitation-wrapper">
+        <article class="invitation-card">
+      <div class="card-gold-line" aria-hidden="true"></div>
+      <!-- Corner arabesque ornaments -->
+      <svg class="corner-ornament top-left" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M8 8 L8 24 Q8 32 16 32 L32 32 Q40 32 40 40 L40 56" stroke="url(#goldStroke)" stroke-width="1.2" fill="none"/>
+        <path d="M12 12 L12 20 Q12 26 18 26 L26 26 Q32 26 32 32 L32 44" stroke="url(#goldStroke)" stroke-width="0.8" fill="none" opacity="0.7"/>
+        <defs><linearGradient id="goldStroke" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#c9a227"/><stop offset="1" stop-color="#e8d48b"/></linearGradient></defs>
+      </svg>
+      <svg class="corner-ornament top-right" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M8 8 L8 24 Q8 32 16 32 L32 32 Q40 32 40 40 L40 56" stroke="url(#goldStroke2)" stroke-width="1.2" fill="none"/>
+        <defs><linearGradient id="goldStroke2" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#c9a227"/><stop offset="1" stop-color="#e8d48b"/></linearGradient></defs>
+      </svg>
+      <svg class="corner-ornament bot-left" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M8 8 L8 24 Q8 32 16 32 L32 32 Q40 32 40 40 L40 56" stroke="url(#goldStroke3)" stroke-width="1.2" fill="none"/>
+        <defs><linearGradient id="goldStroke3" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#c9a227"/><stop offset="1" stop-color="#e8d48b"/></linearGradient></defs>
+      </svg>
+      <svg class="corner-ornament bot-right" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M8 8 L8 24 Q8 32 16 32 L32 32 Q40 32 40 40 L40 56" stroke="url(#goldStroke4)" stroke-width="1.2" fill="none"/>
+        <defs><linearGradient id="goldStroke4" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#c9a227"/><stop offset="1" stop-color="#e8d48b"/></linearGradient></defs>
+      </svg>
+
+      <!-- Bismillah -->
+      <section class="section bismillah-wrap">
+        <svg class="arch-deco" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M0 40 Q100 0 200 40" stroke="url(#goldArch)" stroke-width="1.5" fill="none"/>
+          <defs>
+            <linearGradient id="goldArch" x1="0" y1="0" x2="200" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#c9a227"/>
+              <stop offset="1" stop-color="#e8d48b"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <p class="bismillah" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+        <div class="bismillah-underline"></div>
+      </section>
+
+      <!-- Divider with crescent -->
+      <div class="divider-gold">
+        <svg class="crescent-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#c9a227"/>
+          <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="#1a1a1a"/>
+        </svg>
+      </div>
+
+      <!-- Wedding title -->
+      <section class="section wedding-title-wrap">
+        <p class="wedding-subtitle">Request the honour of your presence</p>
+        <h1 class="wedding-title">Nikah & Walima</h1>
+        <p class="family-name">The House of Al-Hassan & Fatima</p>
+      </section>
+
+      <!-- Bride side family -->
+      <section class="section">
+        <div class="glass-panel">
+          <div class="panel-label">With the blessings of the Almighty</div>
+          <p class="panel-text">
+            Mr. &amp; Mrs. Abdullah Al-Hassan request the pleasure of your company at the wedding of their daughter <strong>Gulsaba</strong> with <strong>Meraj</strong>, son of Mr. &amp; Mrs. Ibrahim Khan.
+          </p>
+        </div>
+      </section>
+
+      <!-- Shayari -->
+      <section class="section shayari-section">
+        <div class="shayari-block">
+          <p class="shayari-text" dir="rtl">دعا کرو میری شادی پہ آ کر، تمہاری آمد مبارک ہو</p>
+          <p class="shayari-eng">Come to my wedding and bless this day — your arrival is a blessing.</p>
+          <p class="shayari-text" dir="rtl">نیک مقدر سے یہ جوڑا بنا، اللہ کا شکر ہے یہ سہانا سفر</p>
+          <p class="shayari-eng">By Allah's grace two hearts unite; we thank Him for this blessed journey.</p>
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="divider-gold">
+        <svg class="crescent-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#c9a227"/>
+          <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="#1a1a1a"/>
+        </svg>
+      </div>
+
+      <!-- Event details -->
+      <section class="section event-section">
+        <div class="event-block event-block-nikah">
+          <span class="event-badge">Sacred Union</span>
+          <h2 class="event-name">Nikah</h2>
+          <div class="detail-row">
+            <svg class="detail-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+            <span>Friday, 15th March 2026</span>
+          </div>
+          <div class="detail-row">
+            <svg class="detail-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+            <span>4:00 PM onwards</span>
+          </div>
+          <div class="detail-row">
+            <svg class="detail-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span>Grand Ballroom, The Imperial Palace, New Delhi</span>
+          </div>
+          <p class="event-nikah-note">With the recitation of the Holy Quran and the sacred Nikah ceremony.</p>
+        </div>
+        <div class="event-block event-block-walima">
+          <span class="event-badge">Feast of Joy</span>
+          <h2 class="event-name">Walima</h2>
+          <div class="detail-row">
+            <svg class="detail-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+            <span>Saturday, 16th March 2026</span>
+          </div>
+          <div class="detail-row">
+            <svg class="detail-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+            <span>7:00 PM onwards</span>
+          </div>
+          <div class="detail-row">
+            <svg class="detail-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span>Lotus Pavilion, The Imperial Palace, New Delhi</span>
+          </div>
+          <p class="event-foods-label">Dawat-e-Walima — A feast awaits you</p>
+          <div class="event-foods">
+            <span>Biryani</span>
+            <span>Haleem</span>
+            <span>Kebabs</span>
+            <span>Nihari</span>
+            <span>Desserts</span>
+            <span>Sherbet &amp; Drinks</span>
+          </div>
+        </div>
+      </section>
+
+      </section>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========== PAGE 4: RSVP & BLESSINGS ========== -->
+    <section class="page blessings-page" id="page-blessings" data-page="3">
+      <div class="invitation-wrapper">
+        <article class="invitation-card">
+          <div class="card-gold-line" aria-hidden="true"></div>
+          <!-- RSVP -->
+          <section id="rsvp" class="section rsvp-section">
+            <p class="blessing-line">Aapki haziri aur duaaon se humari shadi ko roshan karein — Your presence and blessings will grace our wedding.</p>
+            <a href="https://wa.me/919876543210?text=Assalamualaikum%2C%20I%20am%20pleased%20to%20attend%20the%20wedding%20%F0%9F%8E%8A%20Jazakallah." target="_blank" rel="noopener noreferrer" class="rsvp-badge rsvp-whatsapp">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              <span>Kindly Respond via WhatsApp</span>
+            </a>
+            <p class="rsvp-note">We would be honoured by your presence.<br>Please respond by 1st March 2026.</p>
+          </section>
+          <div class="divider-gold" style="margin: 0 2rem;">
+            <svg class="crescent-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#c9a227"/>
+              <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="#1a1a1a"/>
+            </svg>
+          </div>
+          <!-- Footer dua -->
+          <footer class="footer-dua">
+            <p class="dua-text" dir="rtl">رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا</p>
+            <p class="dua-attribution">— Surah Al-Furqan, 25:74</p>
+          </footer>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      var container = document.getElementById('pages-container');
+      var pages = document.querySelectorAll('.page');
+      var dots = document.querySelectorAll('.page-dot');
+      var openBtn = document.getElementById('open-invitation-btn');
+      var welcomePage = document.getElementById('page-welcome');
+
+      function goToPage(index) {
+        var page = pages[index];
+        if (page) {
+          page.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        dots.forEach(function (d, i) {
+          d.classList.toggle('active', i === index);
+        });
+        if (index > 0 && welcomePage) {
+          welcomePage.classList.add('revealed');
+        }
+      }
+
+      function updateActiveDot() {
+        var scrollTop = container.scrollTop;
+        var winHalf = window.innerHeight * 0.5;
+        var active = 0;
+        pages.forEach(function (p, i) {
+          var top = p.offsetTop;
+          if (scrollTop >= top - winHalf) active = i;
+        });
+        dots.forEach(function (d, i) {
+          d.classList.toggle('active', i === active);
+        });
+      }
+
+      if (openBtn) {
+        openBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          goToPage(1);
+        });
+      }
+
+      if (welcomePage) {
+        welcomePage.addEventListener('click', function (e) {
+          if (e.target.closest('.open-invitation-btn')) return;
+          goToPage(1);
+        });
+      }
+
+      dots.forEach(function (dot) {
+        dot.addEventListener('click', function () {
+          var index = parseInt(this.getAttribute('data-page'), 10);
+          goToPage(index);
+        });
+      });
+
+      if (container) {
+        container.addEventListener('scroll', function () {
+          requestAnimationFrame(updateActiveDot);
+        });
+      }
+
+      window.addEventListener('load', updateActiveDot);
+
+      // Reveal on scroll for .reveal sections
+      var reveals = document.querySelectorAll('.reveal');
+      function revealOnScroll() {
+        reveals.forEach(function (el) {
+          var rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 80) el.classList.add('revealed');
+        });
+      }
+      window.addEventListener('scroll', revealOnScroll);
+    })();
+  </script>
+</body>
+</html>
